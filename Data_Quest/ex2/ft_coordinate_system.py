@@ -11,13 +11,17 @@ def calc_destance(tbl1,tbl2=(0,0,0)) -> float:
 
 def check_input(inpt) -> bool:
     lst = inpt.split(',')
+    if len(lst) < 3:
+        print('Invalid syntax')
+        return True
     i = 0
     while i < len(lst):
         lst[i] = lst[i].strip()
         try:
             float(lst[i])
         except ValueError:
-            print('Invalid syntax')
+            print(f'Error on parameter ’{lst[i]}’  ',end='')
+            print(f'could not convert string to float:  ’{lst[i]}’')
             return True
         i+=1
     return False
@@ -42,6 +46,7 @@ def main() -> None:
     print(f'Distance to center:  {calc_destance(coordinates)}\n')
     print('Get a second set of coordinates')
     coordinates2 = get_player_pos()
+    print(f'Distance between the 2 sets of coordinates:  {calc_destance(coordinates,coordinates2)}\n')
 
 
 if __name__ == '__main__' :
