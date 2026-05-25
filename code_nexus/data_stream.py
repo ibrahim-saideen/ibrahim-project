@@ -135,23 +135,21 @@ class LogProcessor(DataProcessor):
 
 class DataStream():
     def __init__(self) -> None:
-        self.processors:list[DataProcessor] = []
-
+        self.processors: list[DataProcessor] = []
 
     def register_processor(self, proc: DataProcessor) -> None:
         self.processors.append(proc)
-
 
     def process_stream(self, stream: list[Any]) -> None:
         for item in stream:
             x = 1
             for processor in self.processors:
                 if processor.validate(item):
-                    processor.ingest(item) 
+                    processor.ingest(item)
                     x = 0
-            if x :
-                print(f'DataStream error - Can’t process element in stream: {item}')
-
+            if x:
+                print(f'DataStream error - Can’t process'
+                      f'element in stream: {item}')
 
     def print_processors_stats(self) -> None:
         print('\n== DataStream statistics ==')
@@ -160,16 +158,14 @@ class DataStream():
             return
         for processor in self.processors:
             if isinstance(processor, NumericProcessor):
-                print('Numeric Processor: ', end = '')
+                print('Numeric Processor: ', end='')
             elif isinstance(processor, TextProcessor):
-                print('Text Processor: ', end = '')
+                print('Text Processor: ', end='')
             elif isinstance(processor, LogProcessor):
-                print('Log Processor: ', end = '')
+                print('Log Processor: ', end='')
             print(f' total {processor.total} items processed , '
-                  f'remaining {processor.total - processor.show_count} on processer')
-        
-
-
+                  f'remaining {processor.total - processor.show_count}'
+                  ' on processer')
 
 
 def main() -> None:
@@ -177,25 +173,25 @@ def main() -> None:
     stream = DataStream()
     stream.register_processor(NumericProcessor())
     lst = [
-    "Hello world",
+        "Hello world",
 
-    [3.14, -1, 2.71],
+        [3.14, -1, 2.71],
 
-    [
-        {
-            "log_level": "WARNING",
-            "log_message": "Telnet access! Use ssh instead"
-        },
-        {
-            "log_level": "INFO",
-            "log_message": "User wil is connected"
-        }
-    ],
+        [
+            {
+                "log_level": "WARNING",
+                "log_message": "Telnet access! Use ssh instead"
+            },
+            {
+                "log_level": "INFO",
+                "log_message": "User wil is connected"
+            }
+        ],
 
-    42,
+        42,
 
-    ["Hi", "five"]
-    ]
+        ["Hi", "five"]
+        ]
     stream.process_stream(lst)
     stream.print_processors_stats()
     stream.register_processor(TextProcessor())
@@ -208,10 +204,6 @@ def main() -> None:
         stream.processors[1].output()
     stream.processors[2].output()
     stream.print_processors_stats()
-    
-
-
-
 
 
 if __name__ == '__main__':
