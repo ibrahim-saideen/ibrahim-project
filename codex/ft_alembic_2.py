@@ -3,4 +3,4 @@ import alchemy
 print('=== Alembic 2 ===')
 print('Accessing alchemy/elements.py using ’import ...’ structure')
 print('Testing create_earth: ', end='')
-print(alchemy.elements.create_earth())
+print(alchemy.elements.create_earth(), 'element created')
